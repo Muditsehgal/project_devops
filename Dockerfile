@@ -1,15 +1,12 @@
-FROM centos
+FROM centos:latest
 
-COPY ./kube.repo /yum.repos.d/
-RUN yum install openssh-server -y
-RUN yum install java -y
-RUN yum install kubectl -y
-RUN yum install git -y
 RUN yum install sudo -y
-COPY ca.crt /root/
-COPY client.crt /root/
-COPY client.ket /root/
-COPY config /root/.kube/
-RUN ssh-keygen -A
-CMD ["/usr/sbin/sshd", "-D"] && /bin/bash
+RUN yum install vim -y
+RUN yum install /sbin/service -y
+RUN yum install httpd -y
+RUN yum install php -y
+COPY *.html /var/www/html/
+CMD /usr/sbin/httpd -DFOREGROUND && /bin/bash
+COPY ./index.html /var/www/html/
+Expose 80
 
